@@ -36,7 +36,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out md:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out sm:translate-x-0",
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -76,7 +76,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 md:ml-64 transition-all duration-300">
+      <div className="flex-1 ml-auto transition-all duration-300">
         {children}
       </div>
 

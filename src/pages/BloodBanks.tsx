@@ -38,7 +38,7 @@ const BloodBanks = () => {
 
   return (
     <div className="min-h-screen bg-medical-light p-4">
-      <div className="container mx-auto max-w-4xl animate-fade-in">
+      <div className="container mx-auto animate-fade-in">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-medical-purple to-medical-blue bg-clip-text text-transparent mb-8">
           Find Blood Banks
         </h1>
@@ -82,7 +82,7 @@ const BloodBanks = () => {
           </Button>
         </form>
 
-        <div className="space-y-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {bloodBanks.map((bloodBank) => (
             <div key={bloodBank.id} className="animate-scale-in">
               <BloodBankCard bloodBank={bloodBank} />

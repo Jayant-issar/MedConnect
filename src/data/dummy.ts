@@ -32,6 +32,86 @@ export const dummyHospitals: Hospital[] = [
       { type: "Emergency", available: 4, total: 12 },
       { type: "Pediatric", available: 5, total: 20 }
     ]
+  },
+  {
+    id: "3",
+    name: "Community Health Clinic",
+    address: "789 Wellness Lane, Wellness Hub",
+    phone: "+1 (555) 555-5555",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    beds: [
+      { type: "ICU", available: 3, total: 15 },
+      { type: "General", available: 20, total: 100 },
+      { type: "Emergency", available: 2, total: 10 },
+      { type: "Pediatric", available: 7, total: 25 }
+    ]
+  },
+  {
+    id: "4",
+    name: "Heart Care Hospital",
+    address: "321 Heart Street, Heart Zone",
+    phone: "+1 (555) 246-8135",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    beds: [
+      { type: "ICU", available: 5, total: 20 },
+      { type: "General", available: 25, total: 100 },
+      { type: "Emergency", available: 3, total: 10 },
+      { type: "Pediatric", available: 8, total: 15 }
+    ]
+  },
+  {
+    id: "5",
+    name: "Mind Care Hospital",
+    address: "654 Mind Avenue, Mind Zone",
+    phone: "+1 (555) 369-1470",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    beds: [
+      { type: "ICU", available: 2, total: 15 },
+      { type: "General", available: 15, total: 80 },
+      { type: "Emergency", available: 4, total: 12 },
+      { type: "Pediatric", available: 5, total: 20 }
+    ]
+  },
+  {
+    id: "6",
+    name: "Body Care Hospital",
+    address: "987 Body Street, Body Zone",
+    phone: "+1 (555) 369-1470",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    beds: [
+      { type: "ICU", available: 3, total: 15 },
+      { type: "General", available: 20, total: 100 },
+      { type: "Emergency", available: 2, total: 10 },
+      { type: "Pediatric", available: 7, total: 25 }
+    ]
+  },
+  {
+    id: "7",
+    name: "Dental Care Hospital",
+    address: "123 Dental Avenue, Dental Zone",
+    phone: "+1 (555) 369-1470",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    beds: [
+      { type: "ICU", available: 5, total: 20 },
+      { type: "General", available: 25, total: 100 },
+      { type: "Emergency", available: 3, total: 10 },
+      { type: "Pediatric", available: 8, total: 15 }
+    ]
   }
 ];
 
@@ -74,6 +154,125 @@ export const dummyBloodBanks: BloodBank[] = [
       { bloodGroup: "AB-", units: 3 },
       { bloodGroup: "O+", units: 60 },
       { bloodGroup: "O-", units: 25 }
+    ]
+  },
+  {
+    id: "3",
+    name: "Heart Care Blood Bank",
+    address: "654 Heart Avenue, Heart Zone",
+    phone: "+1 (555) 246-8135",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    inventory: [
+      { bloodGroup: "A+", units: 55 },
+      { bloodGroup: "A-", units: 22 },
+      { bloodGroup: "B+", units: 48 },
+      { bloodGroup: "B-", units: 17 },
+      { bloodGroup: "AB+", units: 12 },
+      { bloodGroup: "AB-", units: 6 },
+      { bloodGroup: "O+", units: 80 },
+      { bloodGroup: "O-", units: 35 }
+    ]
+  },{
+    id: "4",
+    name: "Heart Care Blood Bank",
+    address: "654 Heart Avenue, Heart Zone",
+    phone: "+1 (555) 246-8135",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    inventory: [
+      { bloodGroup: "A+", units: 55 },
+      { bloodGroup: "A-", units: 22 },
+      { bloodGroup: "B+", units: 48 },
+      { bloodGroup: "B-", units: 17 },
+      { bloodGroup: "AB+", units: 12 },
+      { bloodGroup: "AB-", units: 6 },
+      { bloodGroup: "O+", units: 80 },
+      { bloodGroup: "O-", units: 35 }
+    ]
+  },
+  {
+    id: "5",
+    name: "Heart Care Blood Bank",
+    address: "654 Heart Avenue, Heart Zone",
+    phone: "+1 (555) 246-8135",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    inventory: [
+      { bloodGroup: "A+", units: 55 },
+      { bloodGroup: "A-", units: 22 },
+      { bloodGroup: "B+", units: 48 },
+      { bloodGroup: "B-", units: 17 },
+      { bloodGroup: "AB+", units: 12 },
+      { bloodGroup: "AB-", units: 6 },
+      { bloodGroup: "O+", units: 80 },
+      { bloodGroup: "O-", units: 35 }
+    ]
+  },
+  {
+    id: "6",
+    name: "Heart Care Blood Bank",
+    address: "654 Heart Avenue, Heart Zone",
+    phone: "+1 (555) 246-8135",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    inventory: [
+      { bloodGroup: "A+", units: 55 },
+      { bloodGroup: "A-", units: 22 },
+      { bloodGroup: "B+", units: 48 },
+      { bloodGroup: "B-", units: 17 },
+      { bloodGroup: "AB+", units: 12 },
+      { bloodGroup: "AB-", units: 6 },
+      { bloodGroup: "O+", units: 80 },
+      { bloodGroup: "O-", units: 35 }
+    ]
+  },
+  {
+    id: "7",
+    name: "Heart Care Blood Bank",
+    address: "654 Heart Avenue, Heart Zone",
+    phone: "+1 (555) 246-8135",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    inventory: [
+      { bloodGroup: "A+", units: 55 },
+      { bloodGroup: "A-", units: 22 },
+      { bloodGroup: "B+", units: 48 },
+      { bloodGroup: "B-", units: 17 },
+      { bloodGroup: "AB+", units: 12 },
+      { bloodGroup: "AB-", units: 6 },
+      { bloodGroup: "O+", units: 80 },
+      { bloodGroup: "O-", units: 35 }
+    ]
+  },
+  {
+    id: "8",
+    name: "Heart Care Blood Bank",
+    address: "654 Heart Avenue, Heart Zone",
+    phone: "+1 (555) 246-8135",
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    inventory: [
+      { bloodGroup: "A+", units: 55 },
+      { bloodGroup: "A-", units: 22 },
+      { bloodGroup: "B+", units: 48 },
+      { bloodGroup: "B-", units: 17 },
+      { bloodGroup: "AB+", units: 12 },
+      { bloodGroup: "AB-", units: 6 },
+      { bloodGroup: "O+", units: 80 },
+      { bloodGroup: "O-", units: 35 }
     ]
   }
 ];
