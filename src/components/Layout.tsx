@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Home, Droplet, Hospital, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { SignedIn, SignedOut, SignInButton,useUser } from "@clerk/clerk-react";
+
 
 interface NavItem {
   icon: React.ElementType;
@@ -17,24 +19,78 @@ const navItems: NavItem[] = [
 ];
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const user =  useUser();
+  
+  useEffect(() => {
+    const checkAuth = async () => {
+      const publicRoutes = ['/login', '/register', '/'];
+      const currentPath = window.location.pathname;
+      
+      // If user is signed in and on a public route, redirect to dashboard
+      if (user.isSignedIn && publicRoutes.includes(currentPath)) {
+        navigate('/dashboard');
+      }
+      
+      // If user is not signed in and not on a public route, redirect to login
+      if (!user.isSignedIn && !publicRoutes.includes(currentPath)) {
+        navigate('/login');
+      }
+    };
+    
+    checkAuth();
+  }, [user.isSignedIn, navigate]); // Add proper dependencies
+
+      
+  return (
+    <div>
+        <div className="min-h-screen bg-medical-light flex">
+          {/* Mobile menu button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="fixed top-4 left-4 z-50 md:hidden"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+
+          {/* Sidebar */}
+          <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+
+          {/* Main content */}
+          <div className="flex-1 ml-auto transition-all duration-300">
+            {children}
+          </div>
+
+          {/* Overlay for mobile */}
+          {isSidebarOpen && (
+            <div
+              className="fixed inset-0 bg-black/20 z-30 md:hidden"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          )}
+        </div>
+      
+
+    </div>
+  );
+};
+
+interface SidebarProps {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (open: boolean) => void;
+}
+const SideBar = ({isSidebarOpen,setIsSidebarOpen}: SidebarProps)=>{
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  if(location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/"){
+    return null
+  }
   return (
-    <div className="min-h-screen bg-medical-light flex">
-      {/* Mobile menu button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="fixed top-4 left-4 z-50 md:hidden"
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-      >
-        <Menu className="h-6 w-6" />
-      </Button>
-
-      {/* Sidebar */}
-      <div
+    <div
         className={cn(
           "fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out sm:translate-x-0",
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -74,21 +130,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </nav>
         </div>
       </div>
-
-      {/* Main content */}
-      <div className="flex-1 ml-auto transition-all duration-300">
-        {children}
-      </div>
-
-      {/* Overlay for mobile */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 z-30 md:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-    </div>
-  );
-};
+  )
+}
 
 export default Layout;
