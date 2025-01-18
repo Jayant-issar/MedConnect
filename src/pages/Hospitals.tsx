@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { HospitalCard } from "@/components/HospitalCard";
 import { dummyHospitals } from "@/data/dummy";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
 
 const Hospitals = () => {
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [hospitals, setHospitals] = useState(dummyHospitals);
 
@@ -21,17 +19,8 @@ const Hospitals = () => {
 
   return (
     <div className="min-h-screen bg-medical-light p-4">
-      <div className="container mx-auto max-w-4xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="mb-4"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-
-        <h1 className="text-3xl font-bold text-medical-blue mb-8">
+      <div className="container mx-auto max-w-4xl animate-fade-in">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-medical-purple to-medical-blue bg-clip-text text-transparent mb-8">
           Find Hospital Beds
         </h1>
 
@@ -41,7 +30,7 @@ const Hospitals = () => {
             placeholder="Search hospitals..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1"
+            className="flex-1 bg-white/50 backdrop-blur-sm"
           />
           <Button type="submit" className="bg-medical-blue hover:bg-medical-blue/90">
             <Search className="w-4 h-4 mr-2" />
@@ -51,7 +40,9 @@ const Hospitals = () => {
 
         <div className="space-y-4">
           {hospitals.map((hospital) => (
-            <HospitalCard key={hospital.id} hospital={hospital} />
+            <div key={hospital.id} className="animate-scale-in">
+              <HospitalCard hospital={hospital} />
+            </div>
           ))}
         </div>
       </div>

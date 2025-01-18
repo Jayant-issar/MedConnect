@@ -3,11 +3,9 @@ import { BloodBankCard } from "@/components/BloodBankCard";
 import { dummyBloodBanks } from "@/data/dummy";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
 
 const BloodBanks = () => {
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [bloodBanks, setBloodBanks] = useState(dummyBloodBanks);
 
@@ -21,17 +19,8 @@ const BloodBanks = () => {
 
   return (
     <div className="min-h-screen bg-medical-light p-4">
-      <div className="container mx-auto max-w-4xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="mb-4"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-
-        <h1 className="text-3xl font-bold text-medical-blue mb-8">
+      <div className="container mx-auto max-w-4xl animate-fade-in">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-medical-purple to-medical-blue bg-clip-text text-transparent mb-8">
           Find Blood Banks
         </h1>
 
@@ -41,7 +30,7 @@ const BloodBanks = () => {
             placeholder="Search blood banks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1"
+            className="flex-1 bg-white/50 backdrop-blur-sm"
           />
           <Button type="submit" className="bg-medical-red hover:bg-medical-red/90">
             <Search className="w-4 h-4 mr-2" />
@@ -51,7 +40,9 @@ const BloodBanks = () => {
 
         <div className="space-y-4">
           {bloodBanks.map((bloodBank) => (
-            <BloodBankCard key={bloodBank.id} bloodBank={bloodBank} />
+            <div key={bloodBank.id} className="animate-scale-in">
+              <BloodBankCard bloodBank={bloodBank} />
+            </div>
           ))}
         </div>
       </div>
