@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Droplet, Hospital, Menu } from "lucide-react";
+import { Home, Droplet, Hospital, Menu, User, Divide } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { SignedIn, SignedOut, SignInButton,useUser } from "@clerk/clerk-react";
+import { UserButton,useUser } from "@clerk/clerk-react";
 
 
 interface NavItem {
@@ -13,7 +13,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { icon: Home, label: "Dashboard", path: "/" },
+  { icon: Home, label: "Dashboard", path: "/dashboard" },
   { icon: Hospital, label: "Hospitals", path: "/hospitals" },
   { icon: Droplet, label: "Blood Banks", path: "/blood-banks" },
 ];
@@ -31,7 +31,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       
       // If user is signed in and on a public route, redirect to dashboard
       if (user.isSignedIn && publicRoutes.includes(currentPath)) {
-        navigate('/dashboard');
+        if(currentPath!=="/"){
+          navigate('/dashboard');
+        }
+        
       }
       
       // If user is not signed in and not on a public route, redirect to login
@@ -46,33 +49,48 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       
   return (
     <div>
-        <div className="min-h-screen bg-medical-light flex">
-          {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="fixed top-4 left-4 z-50 md:hidden"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          >
-            <Menu className="h-6 w-6" />
-          </Button>
+        <div className="min-h-screen bg-medical-light">
+      {/* Mobile menu button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="fixed top-4 left-4 z-50 md:hidden"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        <Menu className="h-6 w-6" />
+      </Button>
 
-          {/* Sidebar */}
+      <div className="flex h-full">
+        {/* Sidebar wrapper */}
+        <div 
+          className={`
+            fixed md:relative
+            inset-y-0 left-0
+            w-64 
+            transform transition-transform duration-300 ease-in-out
+            md:transform-none
+            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+            z-40
+          `}
+        >
           <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-
-          {/* Main content */}
-          <div className="flex-1 ml-auto transition-all duration-300">
-            {children}
-          </div>
-
-          {/* Overlay for mobile */}
-          {isSidebarOpen && (
-            <div
-              className="fixed inset-0 bg-black/20 z-30 md:hidden"
-              onClick={() => setIsSidebarOpen(false)}
-            />
-          )}
         </div>
+
+        {/* Main content */}
+        <main className="flex-1 w-full  p-4">
+        
+          {children}
+        </main>
+
+        {/* Overlay for mobile */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/20 z-30 md:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+      </div>
+    </div>
       
 
     </div>
@@ -92,13 +110,13 @@ const SideBar = ({isSidebarOpen,setIsSidebarOpen}: SidebarProps)=>{
   return (
     <div
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out sm:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-white via-indigo-50 to-indigo-100 shadow-lg transform transition-transform duration-300 ease-in-out sm:translate-x-0",
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="p-6">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-medical-purple to-medical-blue bg-clip-text text-transparent mb-8">
-            MedFind
+            MedConnect
           </h1>
           <nav className="space-y-2">
             {navItems.map((item) => {
@@ -127,6 +145,14 @@ const SideBar = ({isSidebarOpen,setIsSidebarOpen}: SidebarProps)=>{
                 </button>
               );
             })}
+            <div className="w-full border-t-2 border-neutral-200"></div>
+            <div className={cn(
+                    "w-full flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-all duration-200",
+                    "hover:bg-medical-soft-gray group mt-12",
+                    
+            )}>
+              <UserButton showName/> 
+            </div>
           </nav>
         </div>
       </div>

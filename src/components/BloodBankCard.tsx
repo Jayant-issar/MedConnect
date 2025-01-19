@@ -1,4 +1,4 @@
-import { BloodBank } from "@/types/medical";
+import { BloodBank } from "@/types/all-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ export const BloodBankCard = ({ bloodBank }: BloodBankCardProps) => {
 
   const handleNavigate = () => {
     window.open(
-      `https://www.google.com/maps/dir/?api=1&destination=${bloodBank.location.lat},${bloodBank.location.lng}`,
+      `https://www.google.com/maps/dir/?api=1&destination=${bloodBank.latitude},${bloodBank.longitude}`,
       "_blank"
     );
   };
@@ -31,7 +31,7 @@ export const BloodBankCard = ({ bloodBank }: BloodBankCardProps) => {
           <div className="grid grid-cols-4 gap-2">
             {bloodBank.inventory.map((blood) => (
               <div key={blood.bloodGroup} className="bg-medical-light p-2 rounded-lg text-center">
-                <p className="text-sm font-semibold">{blood.bloodGroup}</p>
+                <p className="text-sm font-semibold">{blood.bloodGroup.split("_")[0]}{blood.bloodGroup.split("_")[1]=="POSITIVE" ? "+" : "-"}</p>
                 <p className="text-medical-blue">{blood.units}</p>
               </div>
             ))}

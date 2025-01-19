@@ -39,6 +39,7 @@ export default function LandingPage() {
               whileTap={{ scale: 0.95 }}
               onHoverStart={() => setIsHovered(true)}
               onHoverEnd={() => setIsHovered(false)}
+              onClick={() => window.location.href = '/dashboard'}
             >
               Start Searching
               <motion.div

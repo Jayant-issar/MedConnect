@@ -1,20 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BloodBankCard } from "@/components/BloodBankCard";
 import { dummyBloodBanks } from "@/data/dummy";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { BloodGroup } from "@/types/medical";
+import { getBloodBanks } from "@/actions/bloodbank";
+import { BloodBank, BloodBanksResponse } from "@/types/all-types";
 
 const BloodBanks = () => {
   const [search, setSearch] = useState("");
-  const [bloodBanks, setBloodBanks] = useState(dummyBloodBanks);
+  const [bloodBanks, setBloodBanks] = useState<BloodBank[] | []>([]);
   const [selectedBloodGroup, setSelectedBloodGroup] = useState<BloodGroup | "">("");
   const [minUnits, setMinUnits] = useState("");
-
+  useEffect(()=>{
+    async function init() {
+      const bloodBankRes = await getBloodBanks()
+      console.log(bloodBankRes);
+      
+      if(bloodBankRes) setBloodBanks(bloodBankRes.data)
+    }
+    init()
+  },[])
   const handleSearch = (e: React.FormEvent) => {
+    if(bloodBanks.length === 0) return
     e.preventDefault();
-    let filtered = dummyBloodBanks;
+    let filtered: BloodBank[] = bloodBanks;
 
     // Filter by name
     if (search) {
@@ -58,14 +69,14 @@ const BloodBanks = () => {
               className="h-10 rounded-md border border-input bg-white/50 px-3 text-base md:text-sm"
             >
               <option value="">Any Blood Group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
+              <option value="A_POSITIVE">A+</option>
+              <option value="A_NEGATIVE">A-</option>
+              <option value="B_POSITIVE">B+</option>
+              <option value="B_NEGATIVE">B-</option>
+              <option value="AB_POSITIVE">AB+</option>
+              <option value="AB_NEGATIVE">AB-</option>
+              <option value="O_POSITIVE">O+</option>
+              <option value="O_NEGATIVE">O-</option>
             </select>
             <Input
               type="number"

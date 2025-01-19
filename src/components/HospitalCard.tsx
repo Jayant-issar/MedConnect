@@ -1,4 +1,4 @@
-import { Hospital } from "@/types/medical";
+import { Hospital } from "@/types/all-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ export const HospitalCard = ({ hospital }: HospitalCardProps) => {
 
   const handleNavigate = () => {
     window.open(
-      `https://www.google.com/maps/dir/?api=1&destination=${hospital.location.lat},${hospital.location.lng}`,
+      `https://www.google.com/maps/dir/?api=1&destination=${hospital.latitude},${hospital.longitude}`,
       "_blank"
     );
   };

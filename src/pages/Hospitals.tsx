@@ -1,21 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HospitalCard } from "@/components/HospitalCard";
-import { dummyHospitals } from "@/data/dummy";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { BedType } from "@/types/medical";
 import SearchBar from "@/components/hospitals/Search-Bar";
+import { Hospital } from "@/types/all-types";
+import { getHospitals } from "@/actions/hospitals";
 
 const Hospitals = () => {
   const [search, setSearch] = useState("");
-  const [hospitals, setHospitals] = useState(dummyHospitals);
+  const [hospitals, setHospitals] = useState<Hospital[]|[]>([]);
   const [selectedBedType, setSelectedBedType] = useState<BedType | "">("");
   const [minAvailable, setMinAvailable] = useState("");
-
+  
+  useEffect(()=>{
+    async function init() {
+      const hospitalsRes = await getHospitals()
+      console.log(hospitalsRes);
+      
+      if(hospitalsRes) setHospitals(hospitalsRes.data)
+    }
+    init()
+  },[])
   const handleSearch = (e: React.FormEvent) => {
+    if(hospitals.length === 0) return
     e.preventDefault();
-    let filtered = dummyHospitals;
+    let filtered: Hospital[] = hospitals;
 
     // Filter by name
     if (search) {
