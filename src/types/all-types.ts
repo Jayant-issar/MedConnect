@@ -37,4 +37,20 @@ createdAt: string; // ISO timestamp
 updatedAt: string; // ISO timestamp
 beds: Bed[];
 }
+
+export interface Drive {
+    id: number;
+    title: string;
+    organizer: string;
+    date: string;
+    time: string;
+    location: string;
+    address: string;
+    distance: string;
+    spots: number;
+    registered: number;
+    urgentTypes: string[];
+    image: string;
+}
+  
   

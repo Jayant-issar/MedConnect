@@ -9,6 +9,7 @@ import Hospitals from "./pages/Hospitals";
 import BloodBanks from "./pages/BloodBanks";
 import LandingPage from "./components/landing page/LandingPage";
 import SignInPage from "./components/auth/Sign-In";
+import BloodDonationPage from "./pages/BloodDonationPage";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/hospitals" element={<Hospitals />} />
             <Route path="/blood-banks" element={<BloodBanks />} />
+            <Route path="/donation-drives" element={<BloodDonationPage/>} />
           </Routes>
         </Layout>
       </BrowserRouter>

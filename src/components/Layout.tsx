@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, Droplet, Hospital, Menu, User, Divide } from "lucide-react";
+import { Home, Droplet, Hospital, Menu, User, Divide, Heart, HeartPulse } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { UserButton,useUser } from "@clerk/clerk-react";
@@ -16,6 +16,7 @@ const navItems: NavItem[] = [
   { icon: Home, label: "Dashboard", path: "/dashboard" },
   { icon: Hospital, label: "Hospitals", path: "/hospitals" },
   { icon: Droplet, label: "Blood Banks", path: "/blood-banks" },
+  { icon: HeartPulse, label:"Donation Drives", path:"/donation-drives"},
 ];
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
