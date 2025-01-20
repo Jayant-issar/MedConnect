@@ -11,6 +11,7 @@ import LandingPage from "./components/landing page/LandingPage";
 import SignInPage from "./components/auth/Sign-In";
 import BloodDonationPage from "./pages/BloodDonationPage";
 import SeekEmergency from "./pages/SeekEmergency";
+import SignUpPage from "./components/auth/SignUp";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<SignInPage/>} />
+            <Route path="/register" element={<SignUpPage/>} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/hospitals" element={<Hospitals />} />
             <Route path="/blood-banks" element={<BloodBanks />} />

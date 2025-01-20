@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Droplet, Bed, ArrowRight, ChevronDown, MapPin, Clock, Smartphone } from 'lucide-react';
-
+import { Search, Droplet, Bed, ArrowRight, ChevronDown, MapPin, Clock, Smartphone, Github, Linkedin, Mail, X } from 'lucide-react';
+import { teamMembers } from '@/data/constants';
 export default function LandingPage() {
   const [isHovered, setIsHovered] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-
+  const [showAbout, setShowAbout] = useState(false);
+  const [showContact, setShowContact] = useState(false);
+  const contactFormRef = useRef<HTMLFormElement>(null);
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically handle the form submission
+    if (contactFormRef.current) {
+      contactFormRef.current.reset();
+    }
+    alert('Thank you for your message! We will get back to you soon.');
+  };
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
@@ -25,8 +35,165 @@ export default function LandingPage() {
           repeatType: "reverse"
         }}
       />
+
+      {/* About Modal */}
+      <AnimatePresence>
+        {showAbout && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowAbout(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowAbout(false)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              >
+                <X size={24} />
+              </button>
+              
+              <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                About Bits and Bytes Brigade
+              </h2>
+              
+              <p className="text-gray-600 mb-8">
+                We are a passionate team of developers dedicated to making healthcare resources more accessible through technology. Our mission is to connect people with life-saving medical facilities when they need them most.
+              </p>
+
+              <h3 className="text-2xl font-semibold mb-6 text-gray-800">Meet Our Team</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {teamMembers.map((member, index) => (
+                  <motion.div
+                    key={member.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 text-center group relative overflow-hidden"
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white shadow-lg"
+                    />
+                    <h4 className="font-semibold text-gray-800 mb-1">{member.name}</h4>
+                    <p className="text-sm text-gray-600 mb-4">{member.role}</p>
+                    <div className="flex justify-center space-x-3 z-50 ">
+                      <a href={member.socials.github} className="text-gray-600 hover:text-blue-600 transition-colors">
+                        <Github size={20} />
+                      </a>
+                      <a href={member.socials.linkedin} className="text-gray-600 hover:text-blue-600 transition-colors">
+                        <Linkedin size={20} />
+                      </a>
+                      <a href={member.socials.email} className="text-gray-600 hover:text-blue-600 transition-colors">
+                        <Mail size={20} />
+                      </a>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+
+      {/* Contact Modal */}
+      <AnimatePresence>
+        {showContact && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowContact(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-2xl p-8 max-w-2xl w-full relative"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowContact(false)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              >
+                <X size={24} />
+              </button>
+              
+              <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Contact Us
+              </h2>
+              
+              <form ref={contactFormRef} onSubmit={handleContactSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    placeholder="Your name"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    placeholder="your@email.com"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    required
+                    rows={4}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    placeholder="Your message..."
+                  ></textarea>
+                </div>
+                
+                <motion.button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Send Message
+                </motion.button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+
       <div className="relative">
-        <header className="container mx-auto px-4 py-6">
+      <header className="container mx-auto px-4 py-6">
           <nav className="flex justify-between items-center">
             <motion.div 
               className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent relative group"
@@ -49,8 +216,8 @@ export default function LandingPage() {
               />
             </motion.div>
             <div className="space-x-4">
-              <motion.a 
-                href="#" 
+              <motion.button 
+                onClick={() => setShowAbout(true)}
                 className="text-gray-600 hover:text-blue-600 transition-colors relative group"
                 whileHover={{ scale: 1.05 }}
               >
@@ -59,9 +226,9 @@ export default function LandingPage() {
                   className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"
                   whileHover={{ width: '100%' }}
                 />
-              </motion.a>
-              <motion.a 
-                href="#" 
+              </motion.button>
+              <motion.button 
+                onClick={() => setShowContact(true)}
                 className="text-gray-600 hover:text-blue-600 transition-colors relative group"
                 whileHover={{ scale: 1.05 }}
               >
@@ -70,7 +237,7 @@ export default function LandingPage() {
                   className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"
                   whileHover={{ width: '100%' }}
                 />
-              </motion.a>
+              </motion.button>
             </div>
           </nav>
         </header>
@@ -168,11 +335,15 @@ export default function LandingPage() {
                 transition={{ delay: 1 }}
               >
                 <div className="flex -space-x-4">
-                  {[1, 2, 3].map((i) => (
+                {[
+                    "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=64&h=64",
+                    "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=64&h=64",
+                    "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?auto=format&fit=crop&w=64&h=64" // Updated URL
+                  ].map((src, index) => (
                     <img
-                      key={i}
-                      src={`https://images.unsplash.com/photo-${i}?auto=format&fit=crop&w=32&h=32`}
-                      alt={`User ${i}`}
+                      key={index}
+                      src={src}
+                      alt={`Medical Field ${index + 1}`}
                       className="w-8 h-8 rounded-full border-2 border-white"
                     />
                   ))}

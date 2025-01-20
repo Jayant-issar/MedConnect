@@ -53,7 +53,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   }
       
   return (
-    <div className="min-h-screen bg-medical-light">
+    <div className="min-h-screen bg-medical-light ">
       {shouldShowSidebar && (
         <Button
           variant="ghost"
@@ -93,7 +93,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
         <main className={cn(
           "flex-1 w-full",
-          shouldShowSidebar ? "md:ml-64" : "",
+          
           "p-4"
         )}>
           {children}
@@ -120,12 +120,12 @@ const SideBar = ({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) => {
       )}
     >
       <div className="py-8 px-2 flex flex-col items-center">
-        <div className="flex items-center justify-center gap-2 mb-8">
+        <a href="/" className="flex items-center justify-center gap-2 mb-8">
           <HeartIcon className="w-8 h-8 text-medical-red mx-auto" />
           <h1 className="text-2xl font-bold bg-gradient-to-r from-medical-purple to-medical-blue bg-clip-text text-transparent">
             MedConnect
           </h1>
-        </div>
+        </a>
         
         <nav className="space-y-2 w-full flex flex-col items-center justify-center">
           {navItems.map((item) => {

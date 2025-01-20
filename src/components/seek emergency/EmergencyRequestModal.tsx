@@ -18,14 +18,14 @@ interface EmergencyRequestModalProps {
 export function EmergencyRequestModal({ isOpen, onClose, onSubmit }: EmergencyRequestModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] w-full p-6">
+      <DialogContent className="  w-full p-6">
         <DialogHeader className="mb-4">
           <DialogTitle className="text-2xl font-bold">Seek Emergency Assistance</DialogTitle>
           <DialogDescription className="text-gray-600">
             Fill out the form below to request immediate help for blood donation emergencies.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 ">
           <EmergencyForm onSubmit={onSubmit} onCancel={onClose} />
         </div>
       </DialogContent>

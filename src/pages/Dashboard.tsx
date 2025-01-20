@@ -70,7 +70,7 @@ const nearbyFacilities = [
 ]
 function Dashboard() {
   return (
-    <div className="min-h-screen bg-gray-50 flex -ml-[28rem]">
+    <div className="min-h-screen bg-gray-50 flex -ml-64 ">
       
 
       {/* Main Content */}
