@@ -6,8 +6,8 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-medical-light">
-      <div className="container mx-auto px-4 py-16">
+    <div className="min-h-screen bg-medical-light min-w-screen">
+      <div className="container px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-medical-blue mb-4">
             MedFind

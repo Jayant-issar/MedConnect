@@ -52,5 +52,17 @@ export interface Drive {
     urgentTypes: string[];
     image: string;
 }
-  
+
+export interface Emergency {
+    id: string;
+    bloodType: string;
+    location: string;
+    hospitalName: string;
+    contactName: string;
+    contactPhone: string;
+    urgency: 'high' | 'medium' | 'low';
+    additionalInfo?: string;
+    status: 'pending' | 'inProgress' | 'resolved';
+    createdAt: string;
+}
   

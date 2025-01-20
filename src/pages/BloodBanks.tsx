@@ -1,31 +1,66 @@
 import { useEffect, useState } from "react";
 import { BloodBankCard } from "@/components/BloodBankCard";
-import { dummyBloodBanks } from "@/data/dummy";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { BloodGroup } from "@/types/medical";
 import { getBloodBanks } from "@/actions/bloodbank";
-import { BloodBank, BloodBanksResponse } from "@/types/all-types";
+import { BloodBank } from "@/types/all-types";
+
+const CACHE_KEY = 'bloodBanksData';
+const CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
 
 const BloodBanks = () => {
   const [search, setSearch] = useState("");
-  const [bloodBanks, setBloodBanks] = useState<BloodBank[] | []>([]);
+  const [bloodBanks, setBloodBanks] = useState<BloodBank[]>([]);
+  const [filteredBanks, setFilteredBanks] = useState<BloodBank[]>([]);
   const [selectedBloodGroup, setSelectedBloodGroup] = useState<BloodGroup | "">("");
   const [minUnits, setMinUnits] = useState("");
-  useEffect(()=>{
-    async function init() {
-      const bloodBankRes = await getBloodBanks()
-      console.log(bloodBankRes);
-      
-      if(bloodBankRes) setBloodBanks(bloodBankRes.data)
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Check cache first
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+          const { data, timestamp } = JSON.parse(cachedData);
+          const isExpired = Date.now() - timestamp > CACHE_DURATION;
+          
+          if (!isExpired) {
+            setBloodBanks(data);
+            setFilteredBanks(data);
+            setIsLoading(false);
+            return;
+          }
+        }
+
+        // Fetch fresh data if cache is missing or expired
+        const bloodBankRes = await getBloodBanks();
+        if (bloodBankRes) {
+          setBloodBanks(bloodBankRes.data);
+          setFilteredBanks(bloodBankRes.data);
+          // Cache the new data
+          localStorage.setItem(CACHE_KEY, JSON.stringify({
+            data: bloodBankRes.data,
+            timestamp: Date.now()
+          }));
+        }
+      } catch (error) {
+        console.error('Failed to fetch blood banks:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-    init()
-  },[])
+
+    fetchData();
+  }, []);
+
   const handleSearch = (e: React.FormEvent) => {
-    if(bloodBanks.length === 0) return
     e.preventDefault();
-    let filtered: BloodBank[] = bloodBanks;
+    if (bloodBanks.length === 0) return;
+
+    let filtered = bloodBanks;
 
     // Filter by name
     if (search) {
@@ -44,7 +79,7 @@ const BloodBanks = () => {
       });
     }
 
-    setBloodBanks(filtered);
+    setFilteredBanks(filtered);
   };
 
   return (
@@ -93,18 +128,24 @@ const BloodBanks = () => {
           </Button>
         </form>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {bloodBanks.map((bloodBank) => (
-            <div key={bloodBank.id} className="animate-scale-in">
-              <BloodBankCard bloodBank={bloodBank} />
-            </div>
-          ))}
-          {bloodBanks.length === 0 && (
-            <p className="text-center text-gray-500 py-8">
-              No blood banks found matching your criteria
-            </p>
-          )}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <Loader2 className="w-8 h-8 animate-spin text-medical-red" />
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredBanks.map((bloodBank) => (
+              <div key={bloodBank.id} className="animate-scale-in">
+                <BloodBankCard bloodBank={bloodBank} />
+              </div>
+            ))}
+            {filteredBanks.length === 0 && (
+              <p className="text-center text-gray-500 py-8">
+                No blood banks found matching your criteria
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

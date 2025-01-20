@@ -10,6 +10,7 @@ import BloodBanks from "./pages/BloodBanks";
 import LandingPage from "./components/landing page/LandingPage";
 import SignInPage from "./components/auth/Sign-In";
 import BloodDonationPage from "./pages/BloodDonationPage";
+import SeekEmergency from "./pages/SeekEmergency";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/hospitals" element={<Hospitals />} />
             <Route path="/blood-banks" element={<BloodBanks />} />
             <Route path="/donation-drives" element={<BloodDonationPage/>} />
+            <Route path="/seek-emergency" element={<SeekEmergency/>} />
           </Routes>
         </Layout>
       </BrowserRouter>
