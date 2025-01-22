@@ -32,7 +32,7 @@ export const teamMembers = [
     {
       name: "Dipanshu Kumar",
       role: "Frontend Developer",
-      image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&q=80&w=200&h=200",
+      image: "https://media.licdn.com/dms/image/v2/D5603AQFKDKU0DtP_3Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729322698623?e=1743033600&v=beta&t=7G5tlMx8W3E_a0rB6TLZC54xdHFWJICCvVIWmZOekiE",
       socials: {
         github: "#",
         linkedin: "#",
